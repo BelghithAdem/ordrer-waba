@@ -1,6 +1,7 @@
 "use client"
 
-export const dynamic = "force-dynamic"; 
+export const dynamic = "force-dynamic";
+export const runtime = 'edge'; // Add this line
 
 import { useState, useEffect, useCallback } from "react"
 import { format, isValid } from "date-fns"
