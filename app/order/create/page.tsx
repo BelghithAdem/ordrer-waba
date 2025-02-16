@@ -1,4 +1,4 @@
-export const runtime = 'edge'; // Configuration pour le Edge Runtime
+export const dynamic = "force-dynamic"; 
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
