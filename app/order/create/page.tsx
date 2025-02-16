@@ -1,3 +1,4 @@
+export const runtime = 'edge'; // Configuration pour le Edge Runtime
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
@@ -83,7 +84,6 @@ import { fetchCustomers, fetchOrders, fetchTemplates, fetchDocumentTemplate } fr
 import { customers as mockedCustomers } from "@/data/dummy-data"
 import { setAccessToken, getAccessToken } from "@/lib/auth"
 import { TransactionList } from "@/components/transaction-list"
-export const runtime = 'edge'; 
 
 type Transaction = {
   id: string
