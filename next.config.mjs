@@ -8,12 +8,13 @@ try {
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  output: 'standalone', // Pas 'export', sinon Cloudflare aura du mal
+  compress: true,
+  swcMinify: true,
   experimental: {
-    optimizeCss: true, // Minifie le CSS
-    nextScriptWorkers: true // Optimise les scripts
+    granularChunks: true, // Réduit la taille des fichiers Webpack
   },
-  swcMinify: true, // Active la minification JS
-  compress: true, // Active la compression Gzip
+  productionBrowserSourceMaps: false, // Désactive les .map pour réduire la taille
   eslint: {
     ignoreDuringBuilds: true,
   },
