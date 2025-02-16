@@ -6,7 +6,14 @@ try {
 }
 
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+  experimental: {
+    optimizeCss: true, // Minifie le CSS
+    nextScriptWorkers: true // Optimise les scripts
+  },
+  swcMinify: true, // Active la minification JS
+  compress: true, // Active la compression Gzip
   eslint: {
     ignoreDuringBuilds: true,
   },
