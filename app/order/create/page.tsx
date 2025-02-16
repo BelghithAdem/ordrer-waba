@@ -83,6 +83,7 @@ import { fetchCustomers, fetchOrders, fetchTemplates, fetchDocumentTemplate } fr
 import { customers as mockedCustomers } from "@/data/dummy-data"
 import { setAccessToken, getAccessToken } from "@/lib/auth"
 import { TransactionList } from "@/components/transaction-list"
+export const runtime = 'edge'; 
 
 type Transaction = {
   id: string
@@ -91,7 +92,6 @@ type Transaction = {
   type: string
   status: string
 }
-
 async function createOrder(orderData: {
   company: number
   orq: number
