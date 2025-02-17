@@ -1,19 +1,15 @@
-let userConfig = undefined
+let userConfig = {}
 try {
-  userConfig = await import('./v0-user-next.config')
+  userConfig = (await import('./v0-user-next.config.js')).default
 } catch (e) {
-  // ignore error
+  console.warn('⚠️ Avertissement: Aucun fichier "v0-user-next.config.js" trouvé. Utilisation de la configuration par défaut.')
 }
 
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
   output: 'standalone', // Pas 'export', sinon Cloudflare aura du mal
   compress: true,
   swcMinify: true,
-  experimental: {
-    granularChunks: true, // Réduit la taille des fichiers Webpack
-  },
   productionBrowserSourceMaps: false, // Désactive les .map pour réduire la taille
   eslint: {
     ignoreDuringBuilds: true,
@@ -25,32 +21,35 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
+    granularChunks: true, // Réduit la taille des fichiers Webpack
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 }
 
-mergeConfig(nextConfig, userConfig)
+// Fusionne userConfig avec nextConfig
+const finalConfig = mergeConfig(nextConfig, userConfig)
 
-function mergeConfig(nextConfig, userConfig) {
-  if (!userConfig) {
-    return
-  }
+function mergeConfig(baseConfig, userConfig) {
+  if (!userConfig) return baseConfig
 
   for (const key in userConfig) {
-    if (
-      typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
-    ) {
-      nextConfig[key] = {
-        ...nextConfig[key],
+    if (typeof baseConfig[key] === 'object' && !Array.isArray(baseConfig[key])) {
+      baseConfig[key] = {
+        ...baseConfig[key],
         ...userConfig[key],
       }
     } else {
-      nextConfig[key] = userConfig[key]
+      baseConfig[key] = userConfig[key]
     }
   }
+  return baseConfig
 }
 
-export default nextConfig
+export default finalConfig
